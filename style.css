@@ -1,0 +1,13 @@
+#container {
+  display: grid; 
+  width: 400px;
+  height: 400px; 
+  background-color: rgb(27, 74, 116);
+  grid-template-columns: auto auto auto;
+
+}
+
+.grid {
+  border: 1px solid blue;
+  background-color:  red;
+}
