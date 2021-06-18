@@ -13,10 +13,14 @@
 //ok - bikin tombol buat penghapus
 //ok - bikin tombol buat reset
 //ok - bikin tombol buat show/hide grid
-//warna berubah saat mouse diteken, bukan diteken baru geser
-//fix - benerin fitur shading
+//ok - warna berubah saat mouse diteken, bukan diteken baru geser
+//ok - fix grid, dari sebelumnya celah diantara grid, jadi border
+//kalo ganti warna background, semua grid yang warnanya sama kayak warna sebelumnya jadi berubah warna
+// click only effect grid, not button
+//benerin fitur shading
 //beresin css
-//kalo ganti warna, semua grid yang warnanya sama kayak warna sebelumnya jadi berubah warna
+
+
 
 
 
