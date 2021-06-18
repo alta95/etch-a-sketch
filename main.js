@@ -9,8 +9,9 @@ document.getElementById("btnShd").addEventListener("click", addShade);
 document.getElementById("btnErs").addEventListener("click", ersColor);
 document.getElementById("newColor").addEventListener("input", manualColor);
 document.getElementById("bgColor").addEventListener("input", changeBG);
-body.addEventListener('mousedown',gridListen);
-body.addEventListener('mouseup',mouseUp);
+
+//body.addEventListener('mousedown',mouseDown);
+//body.addEventListener('mouseup',mouseUp);
 
 function ersColor(){colorType = 'erase';}
 function changeBG(){bgColor=document.getElementById("bgColor").value;}
@@ -18,68 +19,24 @@ function manualColor(){colorType = 'manual';}
 function rndColor(){colorType ='random';}
 function addShade(){colorType ='shade';}
 
-//show/hide grid
-function hideGrid() {
-    let gap = document.getElementById("container")
-    if (gap.style.gap == '0px'){gap.style.gridGap = "1px";}
-    else if (gap.style.gap == '1px'){gap.style.gridGap = "0px";}
-    else  {gap.style.gridGap = "0px";}
-}
-
-//create initial grid
-for(let i = 0; i < 9; i++) {
-    var div = document.createElement("div");
-    div.className = "grid";
-    //div.innerHTML = i;
-    div.id = i;
-    document.getElementById("container").appendChild(div);
-}
-
-//resize grid
-function resize(newSize){
-    //change default color
-    color = document.getElementById("newColor").value;
-
-    //delete old grid
-    let oldGrid = document.getElementsByClassName("grid");   
-    for (i=oldGrid.length-1; i>=0; i--) {
-        oldGrid[i].remove();
-    }
-
-    //change grid column number
-    document.getElementById("container").style.gridTemplateColumns= 'auto '.repeat(newSize);;
-
-    //create new grid
-    for( i = 0; i < newSize**2; i++) {
-         div = document.createElement("div");
-        div.className = "grid";
-                //div.innerHTML = i;
-        document.getElementById("container").appendChild(div);
-        document.getElementsByClassName("grid")[i].style.backgroundColor = bgColor;
-    }
-    //change grid color based on picked bg color
-       gridListen();
-}
-
-//slider
-let slider = document.getElementById("myRange");
-let output = document.getElementById("demo");
-output.innerText = slider.value +' x '+slider.value;
-
-slider.oninput = function() {
-  output.innerText = this.value+' x '+this.value;
-  resize(this.value);
-}
-
-
 //ganti input scan all grid
-function gridListen(){
+function mouseDown(){
     let gridPixels = container.querySelectorAll('.grid');
-    gridPixels.forEach(gridPixel => gridPixel.addEventListener('mouseover', redirect));
-    gridPixels.forEach(gridPixel => gridPixel.backgroundColor = 'black');
+    gridPixels.forEach(gridPixel => gridPixel.addEventListener('mouseover', chgColor));
 }
+
+function mouseUp(){
+    //console.log ('up');
+    grid = document.getElementsByClassName('grid');
+    for (var i = 0; i < grid.length; i++) {
+        grid[i].removeEventListener('mouseover',chgColor);
+        
+    }
+}
+
+
 //ganti warna
-function redirect(){
+function chgColor(){
     console.log(typeof (event.path[0].style.backgroundColor));
     if (colorType =='random'){
         color = '#'+Math.floor(Math.random()*16777215).toString(16);
@@ -114,15 +71,67 @@ function redirect(){
     
 }
 
+//resize grid
+function resize(newSize){
+    //change default color
+    color = document.getElementById("newColor").value;
 
-function mouseUp(){
-    //console.log ('up');
-    grid = document.getElementsByClassName('grid');
-    for (var i = 0; i < grid.length; i++) {
-        grid[i].removeEventListener('mouseover',redirect);
-        
+    //delete old grid
+    let oldGrid = document.getElementsByClassName("grid");   
+    for (i=oldGrid.length-1; i>=0; i--) {
+        oldGrid[i].remove();
     }
+
+    //change grid column number
+    document.getElementById("container").style.gridTemplateColumns= 'auto '.repeat(newSize);;
+
+    //create new grid
+    for( i = 0; i < newSize**2; i++) {
+         div = document.createElement("div");
+        div.className = "grid";
+                //div.innerHTML = i;
+        document.getElementById("container").appendChild(div);
+        document.getElementsByClassName("grid")[i].style.backgroundColor = bgColor;
+    }
+    //change grid color based on picked bg color
+       mouseDown();
 }
+
+//show/hide grid
+function hideGrid() {
+    let gap = document.getElementById("container")
+    if (gap.style.gap == '0px'){gap.style.gridGap = "1px";}
+    else if (gap.style.gap == '1px'){gap.style.gridGap = "0px";}
+    else  {gap.style.gridGap = "0px";}
+}
+
+//create initial grid
+for(let i = 0; i < 9; i++) {
+    var div = document.createElement("div");
+    div.className = "grid";
+    //div.innerHTML = i;
+    div.id = i;
+    document.getElementById("container").appendChild(div);
+}
+
+
+
+//slider
+let slider = document.getElementById("myRange");
+let output = document.getElementById("demo");
+output.innerText = slider.value +' x '+slider.value;
+
+slider.oninput = function() {
+  output.innerText = this.value+' x '+this.value;
+  resize(this.value);
+}
+
+
+
+
+
+
+
 
 
 function hexToHSL(H) {
